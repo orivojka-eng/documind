@@ -1,0 +1,27 @@
+{
+  "name": "documind",
+  "version": "1.0.0",
+  "description": "DocuMind - AI Document Intelligence & Automation Platform for QuolyTech",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000 --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node tests/run_all_features.js",
+    "test:ids": "node tests/check_ids.js"
+  },
+  "keywords": [
+    "ai",
+    "document-processing",
+    "ocr",
+    "finance",
+    "rag",
+    "quolytech"
+  ],
+  "author": "QuolyTech",
+  "license": "MIT",
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "vite": "^5.4.21"
+  }
+}

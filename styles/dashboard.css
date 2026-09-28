@@ -1,0 +1,752 @@
+/* DocuMind - Dashboard, Queue, RAG Search & ROI Calculator Styles
+   Executive Portfolio Experience for QuolyTech
+*/
+
+/* Metrics Ribbon */
+.metrics-ribbon {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metric-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all var(--transition-fast);
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-light);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.metric-card.accent-lime {
+  border-top: 3px solid var(--color-lime);
+}
+
+.metric-card.accent-violet {
+  border-top: 3px solid var(--color-violet);
+}
+
+.metric-card.accent-warning {
+  border-top: 3px solid var(--status-warning);
+}
+
+.metric-card.accent-danger {
+  border-top: 3px solid var(--status-danger);
+}
+
+.metric-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-icon-bubble {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--bg-surface-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-white);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.metric-value.highlight-lime {
+  color: var(--color-lime);
+  text-shadow: 0 0 20px rgba(198, 255, 51, 0.4);
+}
+
+.metric-subtext {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.metric-trend-up {
+  color: var(--color-lime);
+  font-weight: 600;
+}
+
+/* Queue Table Section */
+.queue-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.queue-controls-bar {
+  padding: 18px 24px;
+  background: var(--bg-surface-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  min-width: 320px;
+}
+
+.search-input-wrapper input {
+  width: 100%;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px 8px 38px;
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.search-input-wrapper input:focus {
+  border-color: var(--color-violet);
+  box-shadow: 0 0 15px rgba(125, 57, 235, 0.35);
+}
+
+.search-icon-inside {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.filter-pills-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-pill-btn {
+  background: var(--bg-deep);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-family);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-pill-btn:hover {
+  color: var(--color-white);
+  border-color: var(--border-light);
+}
+
+.filter-pill-btn.active {
+  background: var(--color-violet);
+  color: var(--color-white);
+  border-color: var(--color-violet-light);
+  font-weight: 600;
+}
+
+/* Document Table */
+.data-table-container {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.data-table th {
+  background: rgba(14, 16, 23, 0.95);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.data-table tbody tr {
+  transition: background var(--transition-fast);
+  cursor: pointer;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(125, 57, 235, 0.08);
+}
+
+.doc-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.doc-type-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(125, 57, 235, 0.15);
+  border: 1px solid rgba(125, 57, 235, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.doc-type-icon.receipt {
+  background: rgba(198, 255, 51, 0.12);
+  border-color: rgba(198, 255, 51, 0.3);
+}
+
+.doc-meta-title {
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.doc-meta-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.amount-text {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+/* RAG / Neural Q&A Search Interface */
+.rag-container {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.rag-hero-box {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.rag-hero-title {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--color-white);
+  margin-bottom: 8px;
+}
+
+.rag-hero-title span.gradient-text {
+  background: linear-gradient(135deg, var(--color-lime) 0%, var(--color-violet-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rag-hero-sub {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.rag-search-bar {
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-violet);
+  border-radius: var(--radius-xl);
+  padding: 8px 12px 8px 24px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(125, 57, 235, 0.25);
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.rag-search-bar:focus-within {
+  border-color: var(--color-lime);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(198, 255, 51, 0.3);
+}
+
+.rag-search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  color: var(--color-white);
+  padding: 8px 12px;
+}
+
+.rag-search-bar input::placeholder {
+  color: var(--text-muted);
+}
+
+.prompt-suggestions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.prompt-chip {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-family);
+  font-size: 0.75rem;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.prompt-chip:hover {
+  background: rgba(125, 57, 235, 0.2);
+  border-color: var(--color-violet);
+  color: var(--color-white);
+  transform: translateY(-1px);
+}
+
+.rag-answer-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 24px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.rag-answer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.rag-ai-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-lime);
+}
+
+.rag-answer-body {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #E2E6F0;
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+
+.rag-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.rag-metric-tile {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+}
+
+.rag-metric-tile .lbl {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.rag-metric-tile .val {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin-top: 2px;
+}
+
+.rag-citations-section {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 16px;
+}
+
+.rag-citations-heading {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.citation-chip {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-violet);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.citation-chip:hover {
+  background: rgba(125, 57, 235, 0.25);
+  border-color: var(--color-lime);
+  transform: translateY(-2px);
+}
+
+/* Approval Workflows Matrix (Kanban) */
+.workflows-kanban {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+}
+
+.kanban-col {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 520px;
+}
+
+.kanban-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.kanban-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kanban-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.kanban-card:hover {
+  border-color: var(--color-violet);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Before vs After & ROI Showcase Section */
+.showcase-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.comparison-hero-card {
+  background: linear-gradient(135deg, rgba(14, 16, 23, 0.95) 0%, rgba(21, 24, 36, 0.95) 100%);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: 36px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.comparison-hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(198, 255, 51, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 24px;
+}
+
+@media (max-width: 900px) {
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.comparison-column {
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.col-before {
+  background: rgba(255, 71, 87, 0.05);
+  border: 1px solid rgba(255, 71, 87, 0.25);
+}
+
+.col-after {
+  background: rgba(198, 255, 51, 0.06);
+  border: 1.5px solid var(--border-lime);
+  box-shadow: 0 0 30px rgba(198, 255, 51, 0.12);
+}
+
+.col-heading {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.col-before .col-heading {
+  color: #FF6B81;
+}
+
+.col-after .col-heading {
+  color: var(--color-lime);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+}
+
+.stat-row .stat-label {
+  color: var(--text-secondary);
+}
+
+.stat-row .stat-val {
+  font-weight: 700;
+  color: var(--color-white);
+  font-family: var(--font-mono);
+}
+
+/* Interactive ROI Calculator */
+.roi-calculator-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+}
+
+.calculator-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 36px;
+  margin-top: 24px;
+}
+
+@media (max-width: 960px) {
+  .calculator-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.slider-group {
+  margin-bottom: 24px;
+}
+
+.slider-label-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.slider-input {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-lime);
+  box-shadow: 0 0 14px var(--color-lime);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.slider-input::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.roi-results-box {
+  background: var(--bg-surface-elevated);
+  border: 1.5px solid var(--border-lime);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(198, 255, 51, 0.15);
+}
+
+.roi-big-result {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.roi-dollar-val {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--color-lime);
+  font-family: var(--font-mono);
+  letter-spacing: -0.03em;
+  text-shadow: 0 0 25px rgba(198, 255, 51, 0.4);
+}
+
+/* Mobile Responsiveness for Dashboard */
+@media (max-width: 768px) {
+  .metrics-ribbon {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .metric-card {
+    padding: 14px;
+  }
+
+  .metric-value {
+    font-size: 1.4rem;
+  }
+
+  .queue-controls-bar {
+    padding: 14px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .search-input-wrapper {
+    min-width: 100%;
+  }
+
+  .filter-pills-group {
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    width: 100%;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-pills-group::-webkit-scrollbar {
+    display: none;
+  }
+
+  .data-table-container {
+    -webkit-overflow-scrolling: touch;
+    border-radius: 0;
+  }
+
+  .workflows-kanban {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 14px;
+    padding-bottom: 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .kanban-col {
+    min-width: 280px;
+    max-width: 85vw;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    min-height: 440px;
+  }
+
+  .roi-calculator-card {
+    padding: 20px 16px;
+  }
+
+  .roi-dollar-val {
+    font-size: 2.2rem;
+  }
+
+  .comparison-hero-card {
+    padding: 24px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .metrics-ribbon {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DocuMind — Autonomous AI Document Processing &amp; Intelligence | QuolyTech</title>
+  <meta name="description" content="AI document-processing system for accounting teams, law firms, and finance departments. Extracts structured data, flags anomalies, and automates approvals.">
+  
+  <!-- Google Fonts: Poppins & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="stylesheet" href="./styles/intro.css">
+  <link rel="stylesheet" href="./styles/document-viewer.css">
+  <link rel="stylesheet" href="./styles/dashboard.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Top Application Header -->
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="header-main-row">
+          <div class="brand-wrapper">
+            <a class="brand-logo" id="brand-home-btn" href="#">
+              <div class="brand-icon-box">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFFFF" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                </svg>
+              </div>
+              <div class="brand-title-group">
+                <div class="brand-name">
+                  DocuMind <span class="ai-tag">AI 4.2</span>
+                </div>
+                <div class="brand-subtitle">
+                  Operations &bull; <strong>QuolyTech</strong>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Header Actions: Clean, Minimal, Intuitive -->
+          <div class="header-actions">
+            <button class="btn btn-secondary btn-sm" id="btn-header-stream-demo" title="Load sample documents batch">
+              <span class="action-icon" data-icon="play"></span>
+              <span>Load Demo</span>
+            </button>
+
+            <button class="btn btn-lime btn-sm" id="btn-open-live-entry-modal" title="Add or ingest a document">
+              <span class="action-icon" data-icon="plus"></span>
+              <span>+ Add Document</span>
+            </button>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button class="btn-mobile-menu" id="btn-mobile-menu" aria-label="Toggle Navigation Drawer">
+              <span data-icon="menu"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs (ALWAYS SHOWN on all screen sizes) -->
+        <nav class="nav-tabs" id="main-nav-tabs">
+          <button class="nav-tab-btn active" data-view="intro">
+            <span class="nav-icon" data-icon="sparkles"></span>
+            <span>Overview</span>
+          </button>
+          <button class="nav-tab-btn" data-view="queue">
+            <span class="nav-icon" data-icon="fileText"></span>
+            <span>Live Queue</span>
+            <span class="tab-badge" id="queue-badge-count">0</span>
+          </button>
+          <button class="nav-tab-btn" data-view="studio">
+            <span class="nav-icon" data-icon="maximize"></span>
+            <span>Document Studio</span>
+          </button>
+          <button class="nav-tab-btn" data-view="rag">
+            <span class="nav-icon" data-icon="search"></span>
+            <span>Neural Q&amp;A</span>
+          </button>
+          <button class="nav-tab-btn" data-view="workflows">
+            <span class="nav-icon" data-icon="layers"></span>
+            <span>Workflows</span>
+          </button>
+          <button class="nav-tab-btn" data-view="metrics">
+            <span class="nav-icon" data-icon="barChart"></span>
+            <span>ROI Calculator</span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Mobile Slide-Down Drawer Menu -->
+    <div class="mobile-drawer" id="mobile-drawer">
+      <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; margin-bottom:4px;">
+        Navigation Menu
+      </div>
+      <div class="mobile-drawer-link" data-drawer-view="intro">
+        <span style="display:flex; align-items:center; gap:10px;">
+          <span data-icon="sparkles" style="color:var(--color-lime);"></span>
+          <span>Overview / Home</span>
+        </span>
+        <span style="color:var(--text-muted);">&rarr;</span>
+      </div>
+      <div class="mobile-drawer-link" data-drawer-view="queue">
+        <span style="display:flex; align-items:center; gap:10px;">
+          <span data-icon="fileText" style="color:var(--color-violet);"></span>
+          <span>Live Queue &amp; Operations</span>
+        </span>
+        <span class="tab-badge" id="mobile-drawer-queue-badge">0</span>
+      </div>
+      <div class="mobile-drawer-link" data-drawer-view="studio">
+        <span style="display:flex; align-items:center; gap:10px;">
+          <span data-icon="maximize" style="color:var(--color-lime);"></span>
+          <span>Document Studio (Split Review)</span>
+        </span>
+        <span style="color:var(--text-muted);">&rarr;</span>
+      </div>
+      <div class="mobile-drawer-link" data-drawer-view="rag">
+        <span style="display:flex; align-items:center; gap:10px;">
+          <span data-icon="search" style="color:var(--color-violet);"></span>
+          <span>Neural Search &amp; Q&amp;A</span>
+        </span>
+        <span style="color:var(--text-muted);">&rarr;</span>
+      </div>
+      <div class="mobile-drawer-link" data-drawer-view="workflows">
+        <span style="display:flex; align-items:center; gap:10px;">
+          <span data-icon="layers" style="color:var(--color-lime);"></span>
+          <span>Approval Workflows (Kanban)</span>
+        </span>
+        <span style="color:var(--text-muted);">&rarr;</span>
+      </div>
+      <div class="mobile-drawer-link" data-drawer-view="metrics">
+        <span style="display:flex; align-items:center; gap:10px;">
+          <span data-icon="barChart" style="color:var(--color-violet);"></span>
+          <span>ROI &amp; Savings Calculator</span>
+        </span>
+        <span style="color:var(--text-muted);">&rarr;</span>
+      </div>
+
+      <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:12px; margin-top:8px; display:flex; flex-direction:column; gap:8px;">
+        <button class="btn btn-lime btn-sm" id="btn-mobile-drawer-live-entry" style="width:100%;">
+          <span data-icon="zap"></span>
+          <span>Enter Live Document (0-Data Mode)</span>
+        </button>
+        <button class="btn btn-secondary btn-sm" id="btn-mobile-drawer-stream-demo" style="width:100%;">
+          <span data-icon="play"></span>
+          <span>Stream Enterprise Demo Batch</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="app-main">
+      
+      <!-- =====================================================================
+           VIEW 0: Kyma-Inspired High-End Intro Page (Launch Page)
+           ===================================================================== -->
+      <section id="view-intro" class="view-section active">
+        <div class="intro-container">
+          
+          <!-- Hero Section -->
+          <div class="intro-hero">
+            <div class="intro-badge-pill">
+              <div class="intro-badge-dot"></div>
+              <span>Autonomous Document AI</span>
+            </div>
+
+            <h1 class="intro-headline">
+              Process Invoices &amp; Contracts<br>
+              <span class="gradient-text">with Zero Manual Typing.</span>
+            </h1>
+
+            <p class="intro-subhead">
+              DocuMind reads documents, extracts structured line items, intercepts bank fraud, and syncs directly to your accounting tools in seconds.
+            </p>
+
+            <div class="intro-cta-row">
+              <button class="btn-hero-launch" id="btn-hero-launch-app">
+                <span data-icon="play"></span>
+                <span>Try Interactive Demo</span>
+              </button>
+
+              <button class="btn-hero-ingest" id="btn-hero-live-entry">
+                <span data-icon="plus"></span>
+                <span>Enter Live Document</span>
+              </button>
+
+              <button class="btn btn-secondary" id="btn-hero-load-demo-stream" style="font-size:0.85rem; padding:12px 20px; border-radius:var(--radius-full); font-weight:600; display:inline-flex; align-items:center; gap:8px;">
+                <span data-icon="refreshCw"></span>
+                <span>Stream Demo Batch</span>
+              </button>
+            </div>
+
+            <!-- Hero Live Preview Console (The Interactive Playground) -->
+            <div class="hero-console-preview">
+              <!-- Visual Laser Scan Beam Indicator -->
+              <div class="hero-laser-line" id="hero-laser-line"></div>
+
+              <div class="console-topbar">
+                <div class="console-dots">
+                  <div class="console-dot" style="background:#FF5F56;"></div>
+                  <div class="console-dot" style="background:#FFBD2E;"></div>
+                  <div class="console-dot" style="background:#27C93F;"></div>
+                </div>
+
+                <!-- Interactive Document Selector Chips (Clean Vector Icons) -->
+                <div class="hero-doc-chips" id="hero-doc-chips">
+                  <button class="hero-doc-chip active" data-hero-doc="0">
+                    <span class="chip-svg-icon" data-icon="fileText"></span>
+                    <span>1. CloudScale ($14.8k)</span>
+                  </button>
+                  <button class="hero-doc-chip" data-hero-doc="1">
+                    <span class="chip-svg-icon" data-icon="shieldAlert" style="color:var(--status-danger);"></span>
+                    <span>2. Horizon Freight (Alert!)</span>
+                  </button>
+                  <button class="hero-doc-chip" data-hero-doc="2">
+                    <span class="chip-svg-icon" data-icon="fileCheck"></span>
+                    <span>3. Apex Legal MSA ($120k)</span>
+                  </button>
+                  <button class="hero-doc-chip" data-hero-doc="3">
+                    <span class="chip-svg-icon" data-icon="receipt"></span>
+                    <span>4. Delta Travel ($1.2k)</span>
+                  </button>
+                </div>
+
+                <div class="badge badge-lime" id="hero-status-pill">
+                  ● Multi-Modal AI Active
+                </div>
+              </div>
+
+              <div class="console-body">
+                <!-- Left: Live Document Sheet Simulator -->
+                <div class="console-left">
+                  <div class="doc-sheet-card" id="doc-sheet-card">
+                    <div class="doc-sheet-header">
+                      <div class="doc-sheet-brand">
+                        <div class="doc-sheet-logo" id="doc-sheet-logo-letter">C</div>
+                        <div>
+                          <div class="doc-sheet-title" id="doc-sheet-vendor-name">CloudScale Technologies Inc.</div>
+                          <div class="doc-sheet-sub" id="doc-sheet-doc-type">Commercial Cloud Services &bull; AP Bill</div>
+                        </div>
+                      </div>
+                      <div class="doc-sheet-meta">
+                        <span class="badge badge-violet" id="doc-sheet-ref">INV-2024-88921</span>
+                        <div style="font-size:0.68rem; color:var(--text-muted); margin-top:2px;" id="doc-sheet-date">Date: Oct 02, 2024</div>
+                      </div>
+                    </div>
+
+                    <!-- Highlighted Interactive Bounding Boxes in Document -->
+                    <div class="doc-sheet-body">
+                      <div class="doc-sheet-line-items">
+                        <div class="doc-sheet-item-row" id="doc-sheet-item-1">
+                          <span class="item-name" id="doc-sheet-desc-1">Cloud Compute Cluster - 12 Nodes</span>
+                          <span class="item-amount" id="doc-sheet-amt-1">$13,500.00</span>
+                        </div>
+                        <div class="doc-sheet-item-row" id="doc-sheet-item-2">
+                          <span class="item-name" id="doc-sheet-desc-2">Enterprise SLA &amp; 24/7 Support</span>
+                          <span class="item-amount" id="doc-sheet-amt-2">$1,350.00</span>
+                        </div>
+                      </div>
+
+                      <div class="doc-sheet-total-bar">
+                        <div style="font-size:0.72rem; color:var(--text-secondary);">Statutory Total Due:</div>
+                        <div class="doc-sheet-highlight-total" id="hero-preview-total">$14,850.00 USD</div>
+                      </div>
+
+                      <div class="doc-sheet-bank-bar" id="doc-sheet-bank-bar">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                          <span class="bank-dot" id="doc-bank-dot"></span>
+                          <span style="font-size:0.72rem; color:var(--text-secondary);" id="doc-sheet-bank-text">Silicon Valley Bank &bull; IBAN: US94...8821</span>
+                        </div>
+                        <span class="badge badge-lime" id="doc-sheet-bank-badge">Verified Match</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="console-sheet-actions">
+                    <button class="btn btn-lime btn-sm" id="btn-hero-test-scan">
+                      <span data-icon="refreshCw"></span>
+                      <span>Run Live Scan</span>
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="btn-hero-inspect-studio">
+                      <span data-icon="maximize"></span>
+                      <span>Inspect in Studio &rarr;</span>
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="btn-hero-quick-approve" style="border-color:rgba(198,255,51,0.3); color:var(--color-lime);">
+                      <span data-icon="checkCircle"></span>
+                      <span>1-Click Approve</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Right: AI Extraction & Risk Panel with Mode Toggle -->
+                <div class="console-right">
+                  <div class="console-right-tabs">
+                    <div style="display:flex; gap:6px;">
+                      <button class="console-tab-btn active" id="tab-hero-smart-extract">
+                        <span data-icon="sparkles"></span>
+                        <span>Smart Extraction</span>
+                      </button>
+                      <button class="console-tab-btn" id="tab-hero-json-stream">
+                        <span>{ } JSON Schema</span>
+                      </button>
+                    </div>
+                    <span style="color:var(--color-lime); font-family:var(--font-mono); font-size:0.7rem;" id="hero-latency-badge">340ms &bull; 99.4% OCR</span>
+                  </div>
+
+                  <!-- Tab 1: Smart Extraction Mode -->
+                  <div class="console-tab-pane active" id="pane-hero-smart-extract">
+                    <div class="hero-live-fields-group">
+                      <div class="hero-live-field active-lime" id="hero-field-vendor-card" title="Click to cycle vendor name">
+                        <div>
+                          <div style="font-size:0.68rem; color:var(--text-secondary); text-transform:uppercase;">Extracted Vendor (Click to Edit)</div>
+                          <div style="font-size:0.85rem; font-weight:700; color:var(--color-white);" id="hero-preview-vendor">CloudScale Technologies Inc.</div>
+                        </div>
+                        <span class="badge badge-lime" id="hero-badge-conf">99.4% Match</span>
+                      </div>
+
+                      <div class="hero-live-field active-violet" id="hero-field-ref-card" title="Click to view reference match">
+                        <div>
+                          <div style="font-size:0.68rem; color:var(--text-secondary); text-transform:uppercase;">Invoice Ref &amp; PO Match</div>
+                          <div style="font-size:0.85rem; font-weight:700; color:var(--color-white);" id="hero-preview-ref">INV-2024-88921 &bull; PO-77302-ENG</div>
+                        </div>
+                        <span class="badge badge-violet" id="hero-badge-po">PO Matched</span>
+                      </div>
+
+                      <div class="hero-live-field active-lime" id="hero-field-total-card" title="Click to cycle statutory total" style="cursor:pointer;">
+                        <div>
+                          <div style="font-size:0.68rem; color:var(--text-secondary); text-transform:uppercase;">Extracted Total (Click to Cycle)</div>
+                          <div style="font-size:0.85rem; font-weight:700; color:var(--color-white);" id="hero-preview-total">$14,850.00 USD</div>
+                        </div>
+                        <span class="badge badge-lime" id="hero-badge-calc">100% Reconciled</span>
+                      </div>
+
+                      <!-- Sentinel Risk Box -->
+                      <div class="hero-sentinel-box" id="hero-sentinel-box">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                          <div class="sentinel-icon-bubble" id="hero-sentinel-icon" data-icon="shieldCheck"></div>
+                          <div>
+                            <div style="font-size:0.78rem; font-weight:700; color:var(--color-white);" id="hero-sentinel-title">Sentinel Fraud Interceptor: Passed</div>
+                            <div style="font-size:0.7rem; color:var(--text-secondary);" id="hero-sentinel-desc">Bank remittance details match ERP Master Record. 0 anomalies detected.</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="font-size:0.68rem; color:var(--text-muted); display:flex; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px solid rgba(255,255,255,0.06); margin-top:8px;">
+                      <span>Zero Data Retention Active</span>
+                      <span style="color:var(--color-lime);">SOC-2 Type II Certified</span>
+                    </div>
+                  </div>
+
+                  <!-- Tab 2: Raw JSON View -->
+                  <div class="console-tab-pane" id="pane-hero-json-stream" style="display:none;">
+                    <pre style="font-size:0.72rem; color:#A7B1D0; line-height:1.5; overflow:auto; max-height:220px;" id="hero-json-stream">{
+  "documentId": "LIVE-STREAM-001",
+  "status": "INGESTED",
+  "ocrEngine": "LayoutLMv3-Multimodal",
+  "vendor": {
+    "name": "CloudScale Technologies Inc.",
+    "taxId": "US-884102931",
+    "verifiedInMaster": true
+  },
+  "financials": {
+    "subtotal": 13500.00,
+    "tax": 1350.00,
+    "total": 14850.00,
+    "currency": "USD"
+  },
+  "sentinelFraudCheck": {
+    "bankMatch": "PASSED",
+    "rateSurge": "0.0%",
+    "duplicateDetected": false
+  }
+}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Explainer Section 1: Problem vs Solution Comparative Matrix -->
+          <div class="intro-matrix-section">
+            <div class="section-label-chip">Executive Overview</div>
+            <h2 class="section-main-heading">
+              The Cost of Manual Processing vs. The DocuMind Advantage
+            </h2>
+            <p class="section-sub-heading">
+              Why finance and legal operations teams replace error-prone typing with layout-aware vision intelligence.
+            </p>
+
+            <div class="matrix-grid">
+              <!-- Column A: Traditional Manual Friction -->
+              <div class="matrix-card problem">
+                <div class="matrix-card-header">
+                  <div class="matrix-badge badge-problem">Traditional Manual Operations</div>
+                  <h3 class="matrix-title">High Labor Cost &amp; Hidden Fraud Exposure</h3>
+                </div>
+                <div class="matrix-list">
+                  <div class="matrix-item">
+                    <span class="matrix-item-icon problem" data-icon="clock"></span>
+                    <div>
+                      <strong>15+ Hours Wasted Weekly:</strong> AP specialists manually type invoice header numbers, vendor details, and tax line items into spreadsheets.
+                    </div>
+                  </div>
+                  <div class="matrix-item">
+                    <span class="matrix-item-icon problem" data-icon="alertTriangle"></span>
+                    <div>
+                      <strong>4.8% Human Error Rate:</strong> Typos in reference numbers, tax breakdowns, and GL coding create painful month-end reconciliation bottlenecks.
+                    </div>
+                  </div>
+                  <div class="matrix-item">
+                    <span class="matrix-item-icon problem" data-icon="shieldAlert"></span>
+                    <div>
+                      <strong>Vulnerable to Vendor Email Fraud:</strong> Fake invoice redirection with unapproved bank account (IBAN) changes slips past manual reviewers.
+                    </div>
+                  </div>
+                  <div class="matrix-item">
+                    <span class="matrix-item-icon problem" data-icon="mail"></span>
+                    <div>
+                      <strong>Lost Time Chasing Approvals:</strong> Invoices get stranded in executive email inboxes, causing vendor friction and lost early-pay discounts.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Column B: DocuMind Autonomous Operations -->
+              <div class="matrix-card solution">
+                <div class="matrix-card-header">
+                  <div class="matrix-badge badge-solution">DocuMind Autonomous AI</div>
+                  <h3 class="matrix-title">Instant Intelligence &amp; Verified Treasury Protection</h3>
+                </div>
+                <div class="matrix-list">
+                  <div class="matrix-item">
+                    <span class="matrix-item-icon solution" data-icon="zap"></span>
+                    <div>
+                      <strong>1.2-Second Layout Extraction:</strong> Layout-aware neural OCR automatically extracts line items, PO numbers, and tax statutory totals.
+                    </div>
+                  </div>
+                  <div class="matrix-item">
+                    <span class="matrix-item-icon solution" data-icon="userCheck"></span>
+                    <div>
+                      <strong>Human-in-the-Loop Review:</strong> Automatically flags ambiguous fields (&lt;90% confidence) with bounding boxes for 1-click confirmation.
+                    </div>
+                  </div>
+                  <div class="matrix-item">
+                    <span class="matrix-item-icon solution" data-icon="shieldCheck"></span>
+                    <div>
+                      <strong>Sentinel Remittance Guard:</strong> Automatically cross-references vendor bank accounts against ERP master records to halt fraudulent transfers.
+                    </div>
+                  </div>
+                  <div class="matrix-item">
+                    <span class="matrix-item-icon solution" data-icon="layers"></span>
+                    <div>
+                      <strong>1-Click Approval &amp; Direct ERP Sync:</strong> Multi-threshold routing with direct automated sync to NetSuite, QuickBooks, or CSV with immutable audit logs.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Explainer Section 2: 4 Core Architectural Capabilities -->
+          <div class="capabilities-section">
+            <div class="section-label-chip">Core Architecture</div>
+            <h2 class="section-main-heading">
+              Four Pillars of Autonomous Document Intelligence
+            </h2>
+            <p class="section-sub-heading">
+              A comprehensive system designed specifically for the strict compliance, high volume, and audit standards of accounting and corporate legal teams.
+            </p>
+
+            <div class="capabilities-grid">
+              <div class="capability-card" data-launch-feature="ocr">
+                <div class="capability-icon-box" data-icon="sparkles"></div>
+                <h3 class="capability-title">Multi-Modal Vision OCR</h3>
+                <p class="capability-desc">
+                  Understands skewed scans, camera photos, and multi-page PDFs down to line-item tables with pixel coordinates without pre-built templates.
+                </p>
+                <div class="capability-link">
+                  <span>Inspect in Studio</span>
+                  <span data-icon="arrowRight"></span>
+                </div>
+              </div>
+
+              <div class="capability-card" data-launch-feature="studio">
+                <div class="capability-icon-box" data-icon="userCheck"></div>
+                <h3 class="capability-title">Human-in-the-Loop Review</h3>
+                <p class="capability-desc">
+                  Every field receives a confidence score. Reviewers are guided directly to low-confidence fields with visual bounding boxes for instant verification.
+                </p>
+                <div class="capability-link">
+                  <span>Test Review Screen</span>
+                  <span data-icon="arrowRight"></span>
+                </div>
+              </div>
+
+              <div class="capability-card" data-launch-feature="fraud">
+                <div class="capability-icon-box" data-icon="shieldAlert"></div>
+                <h3 class="capability-title">Sentinel Fraud Interceptor</h3>
+                <p class="capability-desc">
+                  Automatically audits bank remittance IBANs, sudden price surge spikes, and duplicate bill numbers against your verified ERP vendor records.
+                </p>
+                <div class="capability-link">
+                  <span>Test Fraud Interceptor</span>
+                  <span data-icon="arrowRight"></span>
+                </div>
+              </div>
+
+              <div class="capability-card" data-launch-feature="erp">
+                <div class="capability-icon-box" data-icon="layers"></div>
+                <h3 class="capability-title">Approval Workflows &amp; GL Sync</h3>
+                <p class="capability-desc">
+                  Threshold-based approval routing (Kanban boards, manager sign-offs) with direct journal entries into Oracle NetSuite, QuickBooks, or CSV.
+                </p>
+                <div class="capability-link">
+                  <span>Test GL Sync</span>
+                  <span data-icon="arrowRight"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive 3-Step Flow ("How It Works") -->
+          <div class="pillars-section">
+            <div class="section-label-chip">Lifecycle Pipeline</div>
+            <h2 class="section-main-heading">
+              3 Simple Steps from Document to Ledger
+            </h2>
+
+            <div class="flow-strip">
+              <div class="flow-step-box" data-flow-step="1" title="Click to test Ingestion">
+                <div class="flow-step-num">STEP 01</div>
+                <div class="flow-step-title">Inbound Upload</div>
+                <div class="flow-step-desc">Documents arrive via email, web drag-and-drop, or secure API endpoints.</div>
+                <div class="flow-step-action-tag">
+                  <span>Test Ingestion</span>
+                  <span data-icon="arrowRight"></span>
+                </div>
+              </div>
+
+              <div class="flow-step-box" data-flow-step="2" title="Click to test AI Extraction & Fraud Sentinel">
+                <div class="flow-step-num">STEP 02</div>
+                <div class="flow-step-title">AI Extraction &amp; Fraud Sentinel</div>
+                <div class="flow-step-desc">Vision OCR parses line items and Sentinel cross-checks bank remittance details.</div>
+                <div class="flow-step-action-tag">
+                  <span>Test OCR Scan</span>
+                  <span data-icon="arrowRight"></span>
+                </div>
+              </div>
+
+              <div class="flow-step-box" data-flow-step="4" title="Click to test 1-Click Approval & ERP Export">
+                <div class="flow-step-num">STEP 03</div>
+                <div class="flow-step-title">1-Click Approval &amp; GL Export</div>
+                <div class="flow-step-desc">Approved bills and receipts sync automatically to NetSuite, QuickBooks, or CSV.</div>
+                <div class="flow-step-action-tag">
+                  <span>Test GL Export</span>
+                  <span data-icon="arrowRight"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Front-Page Neural Q&A Sandbox -->
+          <div class="intro-neural-sandbox">
+            <div class="sandbox-header">
+              <div>
+                <span class="badge badge-violet" style="margin-bottom:8px;">Instant Knowledge Search</span>
+                <h2 style="font-size:1.35rem; font-weight:800; color:var(--color-white); letter-spacing:-0.02em;">
+                  Ask DocuMind AI Across Your Archive
+                </h2>
+                <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:4px;">
+                  Click any question to see real-time AI document synthesis and citations:
+                </p>
+              </div>
+              <button class="btn btn-outline-violet btn-sm" id="btn-front-open-full-rag">
+                <span>Open Q&amp;A Workspace</span>
+                <span data-icon="arrowRight"></span>
+              </button>
+            </div>
+
+            <div class="sandbox-query-bar">
+              <div class="sandbox-input-box">
+                <span data-icon="search" style="color:var(--color-lime);"></span>
+                <input type="text" id="front-rag-input" placeholder="Ask anything about invoices, contracts, or vendor bank details..." value="Which vendor had an unapproved bank account change?">
+              </div>
+              <button class="btn btn-lime" id="btn-front-rag-submit">
+                <span data-icon="zap"></span>
+                <span>Ask AI</span>
+              </button>
+            </div>
+
+            <!-- Clickable Preset Prompt Chips (Clean Vector Icons) -->
+            <div class="front-prompt-chips">
+              <button class="front-chip active" data-front-prompt="Which vendor had an unapproved bank account change?">
+                <span data-icon="shieldAlert" style="color:var(--status-danger);"></span>
+                <span>Bank Remittance Mismatch</span>
+              </button>
+              <button class="front-chip" data-front-prompt="What is the liability cap in Apex Legal MSA?">
+                <span data-icon="fileCheck" style="color:var(--color-violet);"></span>
+                <span>Apex Legal MSA Liability Cap</span>
+              </button>
+              <button class="front-chip" data-front-prompt="What are our total cloud and infrastructure expenses across Q3?">
+                <span data-icon="dollarSign" style="color:var(--color-lime);"></span>
+                <span>Total Cloud Infrastructure (Q3)</span>
+              </button>
+              <button class="front-chip" data-front-prompt="What is the breakdown of executive travel expenses this month?">
+                <span data-icon="receipt" style="color:var(--color-lime);"></span>
+                <span>Executive Flight Receipt Policy</span>
+              </button>
+            </div>
+
+            <!-- Instant AI Synthesis Result Card -->
+            <div class="front-rag-result-card" id="front-rag-result-card">
+              <!-- Rendered via JavaScript -->
+            </div>
+          </div>
+
+          <!-- Interactive Front-Page Mini ROI Calculator -->
+          <div class="intro-mini-roi">
+            <div>
+              <span class="badge badge-lime" style="margin-bottom:8px;">Cost Savings Calculator</span>
+              <h2 style="font-size:1.35rem; font-weight:800; color:var(--color-white); letter-spacing:-0.02em;">
+                Calculate Your Real-Time Financial ROI
+              </h2>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:4px; margin-bottom:16px;">
+                Drag the slider to your estimated monthly document volume to see how many hours and dollars DocuMind reclaims.
+              </p>
+
+              <!-- Currency Switcher -->
+              <div class="currency-toggle-row">
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Currency:</span>
+                <button class="currency-chip active" data-currency="USD">$ USD</button>
+                <button class="currency-chip" data-currency="EUR">€ EUR</button>
+                <button class="currency-chip" data-currency="GBP">£ GBP</button>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.85rem; font-weight:600;">
+                  <span style="color:var(--color-white);">Monthly Document Volume:</span>
+                  <span style="color:var(--color-lime); font-family:var(--font-mono); font-weight:700;" id="mini-calc-display">1,500 docs/mo</span>
+                </div>
+                <input type="range" class="slider-input" id="mini-calc-slider" min="300" max="15000" step="100" value="1500">
+                <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:var(--text-muted); margin-top:4px;">
+                  <span>300 docs</span>
+                  <span>5,000 docs</span>
+                  <span>15,000+ docs</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mini-roi-result">
+              <div style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Projected Annual Direct Savings</div>
+              <div style="font-size:2.2rem; font-weight:900; color:var(--color-lime); font-family:var(--font-mono); margin:4px 0;" id="mini-calc-dollars">$157,500</div>
+              <div style="font-size:0.78rem; color:var(--color-white); font-weight:600;" id="mini-calc-hours">312.5 Hours Reclaimed Monthly</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:6px;">87% cycle time acceleration vs manual data entry &bull; Payback: ~18 Days</div>
+            </div>
+          </div>
+
+          <!-- Enterprise Trust Strip -->
+          <div class="trust-strip">
+            <div class="trust-item">
+              <div class="trust-item-icon" data-icon="shieldCheck"></div>
+              <div>
+                <div class="trust-item-title">SOC-2 Type II Certified</div>
+                <div class="trust-item-sub">Enterprise security controls</div>
+              </div>
+            </div>
+
+            <div class="trust-item">
+              <div class="trust-item-icon" data-icon="zap"></div>
+              <div>
+                <div class="trust-item-title">Zero Data Retention (ZDR)</div>
+                <div class="trust-item-sub">Models never train on client files</div>
+              </div>
+            </div>
+
+            <div class="trust-item">
+              <div class="trust-item-icon" data-icon="checkCircle"></div>
+              <div>
+                <div class="trust-item-title">256-Bit AES Encryption</div>
+                <div class="trust-item-sub">At rest and in transit</div>
+              </div>
+            </div>
+
+            <div class="trust-item">
+              <div class="trust-item-icon" data-icon="clock"></div>
+              <div>
+                <div class="trust-item-title">19.2 Hours Saved Weekly</div>
+                <div class="trust-item-sub">Measured finance impact</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Enterprise Deployment CTA Banner with QuolyTech Copyright -->
+          <div class="intro-bottom-banner">
+            <div class="banner-inner">
+              <div class="banner-left">
+                <div class="badge badge-lime" style="margin-bottom:8px;">Ready for Production</div>
+                <h3 style="font-size:1.4rem; font-weight:800; color:var(--color-white); letter-spacing:-0.02em;">
+                  Deploy Autonomous Document Processing Today
+                </h3>
+                <p style="font-size:0.85rem; color:var(--text-secondary); max-width:560px; margin-top:4px;">
+                  Process live invoices with zero data retention, try the interactive document studio, or load pre-built enterprise batches.
+                </p>
+              </div>
+              <div class="banner-actions">
+                <button class="btn btn-lime" id="btn-bottom-enter-live">
+                  <span data-icon="plus"></span>
+                  <span>Enter Live Document</span>
+                </button>
+                <button class="btn btn-secondary" id="btn-bottom-stream-demo">
+                  <span data-icon="play"></span>
+                  <span>Stream Demo Batch</span>
+                </button>
+              </div>
+            </div>
+            <div class="banner-copyright-strip">
+              <span>&copy; 2026 <strong>QuolyTech</strong>. All rights reserved. DocuMind&trade; is an autonomous AI document operations platform.</span>
+              <span class="compliance-tag"><span data-icon="shieldCheck"></span> Zero Data Retention (ZDR)</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           VIEW 1: Live Document Queue & Operations Pipeline
+           ===================================================================== -->
+      <section id="view-queue" class="view-section">
+        <!-- Live Metrics Ribbon -->
+        <div class="metrics-ribbon">
+          <div class="metric-card accent-lime">
+            <div class="metric-top">
+              <span class="metric-label">Time Saved This Week</span>
+              <div class="metric-icon-bubble" data-icon="zap"></div>
+            </div>
+            <div class="metric-value highlight-lime" id="kpi-hours-saved">19.2 hrs</div>
+            <div class="metric-subtext">
+              <span class="metric-trend-up">&uarr; 85.7% speedup</span> vs manual typing
+            </div>
+          </div>
+
+          <div class="metric-card accent-violet">
+            <div class="metric-top">
+              <span class="metric-label">Documents in Queue</span>
+              <div class="metric-icon-bubble" data-icon="fileText"></div>
+            </div>
+            <div class="metric-value" id="kpi-queue-count">0</div>
+            <div class="metric-subtext" id="kpi-queue-subtext">Standby (0-Data Mode)</div>
+          </div>
+
+          <div class="metric-card accent-warning">
+            <div class="metric-top">
+              <span class="metric-label">Human Review Needed</span>
+              <div class="metric-icon-bubble" data-icon="alertTriangle"></div>
+            </div>
+            <div class="metric-value" id="kpi-needs-review-count">0</div>
+            <div class="metric-subtext">Confidence &lt; 90% threshold</div>
+          </div>
+
+          <div class="metric-card accent-danger">
+            <div class="metric-top">
+              <span class="metric-label">Anomalies Detected</span>
+              <div class="metric-icon-bubble" data-icon="shieldAlert"></div>
+            </div>
+            <div class="metric-value" id="kpi-anomalies-count">0</div>
+            <div class="metric-subtext" style="color:#FF6B81;">Flagged Sentinel risks</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-top">
+              <span class="metric-label">Straight-Through Rate</span>
+              <div class="metric-icon-bubble" data-icon="checkCircle"></div>
+            </div>
+            <div class="metric-value">84.6%</div>
+            <div class="metric-subtext">Zero-touch auto approval</div>
+          </div>
+        </div>
+
+        <!-- Document Table Card -->
+        <div class="queue-card">
+          <div class="queue-controls-bar">
+            <div class="search-input-wrapper">
+              <span class="search-icon-inside" data-icon="search"></span>
+              <input type="text" id="queue-search-input" placeholder="Search by vendor, invoice #, PO or amount...">
+            </div>
+
+            <div class="filter-pills-group" id="type-filter-group">
+              <button class="filter-pill-btn active" data-filter-type="all">All Documents</button>
+              <button class="filter-pill-btn" data-filter-type="invoice">Invoices</button>
+              <button class="filter-pill-btn" data-filter-type="contract">Contracts (MSA)</button>
+              <button class="filter-pill-btn" data-filter-type="receipt">Receipts</button>
+            </div>
+
+            <div class="filter-pills-group" id="status-filter-group">
+              <button class="filter-pill-btn active" data-filter-status="all">All Statuses</button>
+              <button class="filter-pill-btn" data-filter-status="needs_review">Needs Review</button>
+              <button class="filter-pill-btn" data-filter-status="anomaly_flagged">Flagged Anomaly</button>
+              <button class="filter-pill-btn" data-filter-status="ready_approval">Ready Approval</button>
+              <button class="filter-pill-btn" data-filter-status="approved">Approved</button>
+            </div>
+
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-secondary btn-sm" id="btn-queue-stream-demo" title="Stream 4 realistic enterprise documents into queue">
+                <span data-icon="play"></span>
+                <span>Stream Demo Batch</span>
+              </button>
+              <button class="btn btn-secondary btn-sm" id="btn-simulate-email" title="Simulate Inbound Email Ingestion">
+                <span data-icon="mail"></span>
+                <span>Simulate Email</span>
+              </button>
+              <button class="btn btn-outline-violet btn-sm" id="btn-open-export-modal" title="Open Export &amp; ERP Sync Hub">
+                <span data-icon="download"></span>
+                <span>Export Hub</span>
+              </button>
+              <button class="btn btn-lime btn-sm" id="btn-queue-add-live" title="Ingest a live document">
+                <span data-icon="plus"></span>
+                <span>Enter Live Doc</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="data-table-container">
+            <table class="data-table" id="documents-table">
+              <thead>
+                <tr>
+                  <th>Document &amp; Ref ID</th>
+                  <th>Vendor / Counterparty</th>
+                  <th>Type</th>
+                  <th>Date &amp; Due</th>
+                  <th>AI Confidence</th>
+                  <th>Status &amp; Risk</th>
+                  <th>Amount</th>
+                  <th>Current Stage</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="documents-table-body">
+                <!-- Injected via JavaScript (or Zero-Data empty state) -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           VIEW 2: Interactive Document Studio (Split Screen)
+           ===================================================================== -->
+      <section id="view-studio" class="view-section">
+        <div class="studio-container">
+          
+          <!-- Left: Realistic Document Canvas & Bounding Boxes -->
+          <div class="doc-canvas-panel">
+            <div class="doc-canvas-toolbar">
+              <div class="canvas-toolbar-group">
+                <label style="font-size:0.75rem; color:var(--text-secondary); font-weight:600;">Active Document:</label>
+                <select id="studio-doc-selector" class="doc-select-dropdown">
+                  <!-- Injected via JavaScript -->
+                </select>
+              </div>
+
+              <div class="canvas-toolbar-group">
+                <button class="toolbar-btn active" id="btn-toggle-bboxes" title="Toggle AI visual bounding box overlays">
+                  <span data-icon="maximize"></span>
+                  <span>Bounding Boxes</span>
+                </button>
+                <button class="toolbar-btn" id="btn-toggle-laser" title="Simulate real-time laser OCR scan">
+                  <span data-icon="zap"></span>
+                  <span>Scan Beam</span>
+                </button>
+                <button class="toolbar-btn" id="btn-zoom-in" title="Zoom in">＋</button>
+                <button class="toolbar-btn" id="btn-zoom-out" title="Zoom out">－</button>
+                <button class="toolbar-btn" id="btn-zoom-reset" title="Reset zoom">100%</button>
+              </div>
+            </div>
+
+            <!-- Viewport with Sheet -->
+            <div class="doc-viewport" id="doc-viewport">
+              <div class="document-sheet-wrapper" id="document-sheet-wrapper">
+                <div class="ocr-laser-beam" id="ocr-laser-beam"></div>
+                
+                <!-- Bounding Boxes Overlay Layer -->
+                <div class="bounding-boxes-layer" id="bounding-boxes-layer">
+                  <!-- Injected dynamically based on active document -->
+                </div>
+
+                <!-- Realistic Rendered Physical Document Sheet -->
+                <div class="document-sheet" id="rendered-document-sheet">
+                  <!-- Dynamic paper content injected by app.js -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Extraction & Human Review Screen -->
+          <div class="review-panel">
+            <div class="review-panel-header">
+              <div class="review-title-row">
+                <div>
+                  <h2 class="review-doc-title" id="studio-doc-title">Document Title</h2>
+                  <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:3px;" id="studio-doc-meta-info">
+                    ID: DOC-2024-0891 &bull; Inbound: Email
+                  </div>
+                </div>
+                <div id="studio-status-badge">
+                  <!-- Injected -->
+                </div>
+              </div>
+
+              <div class="confidence-bar-wrapper">
+                <span style="font-size:0.75rem; font-weight:600; color:var(--text-secondary);">Overall AI Confidence:</span>
+                <div class="confidence-meter">
+                  <div class="confidence-fill" id="studio-confidence-bar" style="width: 96%;"></div>
+                </div>
+                <span class="confidence-score-label" id="studio-confidence-score">96.2%</span>
+              </div>
+            </div>
+
+            <!-- Subtabs -->
+            <div class="review-tabs">
+              <button class="review-subtab active" data-subtab="fields">
+                <span>Structured Fields</span>
+              </button>
+              <button class="review-subtab" data-subtab="anomalies">
+                <span>Anomalies &amp; Risk</span>
+                <span class="review-subtab-badge" id="studio-anomalies-badge" style="display:none;">1</span>
+              </button>
+              <button class="review-subtab" data-subtab="workflow">
+                <span>Approval Routing</span>
+              </button>
+              <button class="review-subtab" data-subtab="audit">
+                <span>Audit Trail</span>
+              </button>
+            </div>
+
+            <!-- Tab Content Body -->
+            <div class="review-body">
+              
+              <!-- Subtab 1: Structured Fields Form -->
+              <div id="subtab-fields" class="review-tab-content active">
+                <div class="extraction-field-group">
+                  <div class="field-group-heading">
+                    <span>Counterparty / Vendor Profile</span>
+                    <span style="font-size:0.68rem; color:var(--color-lime);">AI LayoutLM v3</span>
+                  </div>
+
+                  <div class="field-grid-2col">
+                    <div class="field-card" data-bbox-target="vendorName">
+                      <div class="field-header-row">
+                        <span class="field-label">Vendor Legal Name</span>
+                        <span class="field-confidence-pill pill-high" id="conf-vendorName">99.4%</span>
+                      </div>
+                      <input type="text" class="field-input-box" id="input-vendorName" value="">
+                    </div>
+
+                    <div class="field-card" data-bbox-target="taxId" id="card-taxId">
+                      <div class="field-header-row">
+                        <span class="field-label">Tax ID (TIN / VAT)</span>
+                        <span class="field-confidence-pill pill-medium" id="conf-taxId">84.1% Review</span>
+                      </div>
+                      <input type="text" class="field-input-box mono" id="input-taxId" value="">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="extraction-field-group">
+                  <div class="field-group-heading">
+                    <span>Document Metadata &amp; Matching</span>
+                    <span style="font-size:0.68rem; color:var(--text-secondary);">PO Match: Verified</span>
+                  </div>
+
+                  <div class="field-grid-2col">
+                    <div class="field-card" data-bbox-target="invoiceNumber">
+                      <div class="field-header-row">
+                        <span class="field-label" id="lbl-doc-number">Document / Invoice #</span>
+                        <span class="field-confidence-pill pill-high" id="conf-invoiceNumber">99.8%</span>
+                      </div>
+                      <input type="text" class="field-input-box mono" id="input-invoiceNumber" value="">
+                    </div>
+
+                    <div class="field-card" data-bbox-target="poNumber">
+                      <div class="field-header-row">
+                        <span class="field-label">Purchase Order (PO #)</span>
+                        <span class="field-confidence-pill pill-high" id="conf-poNumber">98.7%</span>
+                      </div>
+                      <input type="text" class="field-input-box mono" id="input-poNumber" value="">
+                    </div>
+
+                    <div class="field-card" data-bbox-target="invoiceDate">
+                      <div class="field-header-row">
+                        <span class="field-label" id="lbl-doc-date">Issue Date</span>
+                        <span class="field-confidence-pill pill-high" id="conf-invoiceDate">99.2%</span>
+                      </div>
+                      <input type="date" class="field-input-box" id="input-invoiceDate" value="">
+                    </div>
+
+                    <div class="field-card" data-bbox-target="dueDate">
+                      <div class="field-header-row">
+                        <span class="field-label" id="lbl-due-date">Due / Expiry Date</span>
+                        <span class="field-confidence-pill pill-high" id="conf-dueDate">98.9%</span>
+                      </div>
+                      <input type="date" class="field-input-box" id="input-dueDate" value="">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Line Items Table -->
+                <div class="extraction-field-group">
+                  <div class="field-group-heading">
+                    <span>Extracted Line Items (OCR Table)</span>
+                    <span style="font-size:0.68rem; color:var(--color-lime);">Live Table &bull; Recalculates</span>
+                  </div>
+
+                  <div class="studio-line-items" data-bbox-target="lineItemsTable">
+                    <table class="studio-items-table">
+                      <thead>
+                        <tr>
+                          <th>Description</th>
+                          <th>GL Code</th>
+                          <th style="width: 50px;">Qty</th>
+                          <th style="width: 80px;">Unit ($)</th>
+                          <th style="width: 90px;">Total ($)</th>
+                        </tr>
+                      </thead>
+                      <tbody id="studio-line-items-body">
+                        <!-- Injected -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Totals Breakdown -->
+                <div class="extraction-field-group">
+                  <div class="field-grid-2col">
+                    <div class="field-card" data-bbox-target="subtotal">
+                      <div class="field-header-row">
+                        <span class="field-label">Subtotal</span>
+                        <span class="field-confidence-pill pill-high">99.7%</span>
+                      </div>
+                      <input type="number" step="0.01" class="field-input-box mono" id="input-subtotal" value="">
+                    </div>
+
+                    <div class="field-card" data-bbox-target="taxAmount">
+                      <div class="field-header-row">
+                        <span class="field-label">Tax / VAT</span>
+                        <span class="field-confidence-pill pill-high">99.1%</span>
+                      </div>
+                      <input type="number" step="0.01" class="field-input-box mono" id="input-taxAmount" value="">
+                    </div>
+                  </div>
+
+                  <div class="field-card" data-bbox-target="total" style="margin-top:12px; border-color:var(--border-lime);">
+                    <div class="field-header-row">
+                      <span class="field-label" style="color:var(--color-lime); font-size:0.8rem; font-weight:700;">Grand Total (Payable)</span>
+                      <span class="field-confidence-pill pill-high">99.9% Match</span>
+                    </div>
+                    <input type="number" step="0.01" class="field-input-box mono" id="input-total" style="font-size:1.2rem; color:var(--color-lime);" value="">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Subtab 2: Anomalies & Risk Tab -->
+              <div id="subtab-anomalies" class="review-tab-content">
+                <div id="anomalies-list-container">
+                  <!-- Injected -->
+                </div>
+              </div>
+
+              <!-- Subtab 3: Approval Routing Workflow -->
+              <div id="subtab-workflow" class="review-tab-content">
+                <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:16px;">
+                  Multi-stage policy routing based on document category, vendor risk score, and invoice value threshold.
+                </div>
+                <div class="workflow-stepper" id="studio-workflow-stepper">
+                  <!-- Injected -->
+                </div>
+              </div>
+
+              <!-- Subtab 4: Immutable Audit Trail -->
+              <div id="subtab-audit" class="review-tab-content">
+                <div class="audit-list" id="studio-audit-list">
+                  <!-- Injected -->
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Review Actions Footer -->
+            <div class="review-panel-footer">
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-danger btn-sm" id="btn-reject-doc">
+                  <span data-icon="x"></span>
+                  <span>Reject</span>
+                </button>
+                <button class="btn btn-secondary btn-sm" id="btn-flag-doc">
+                  <span data-icon="shieldAlert"></span>
+                  <span>Flag Anomaly</span>
+                </button>
+              </div>
+
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-outline-violet btn-sm" id="btn-export-single-csv">
+                  <span data-icon="download"></span>
+                  <span>Export CSV</span>
+                </button>
+                <button class="btn btn-lime btn-sm" id="btn-approve-route">
+                  <span data-icon="checkCircle"></span>
+                  <span>Approve &amp; Route</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           VIEW 3: Neural Search & RAG Q&A Engine
+           ===================================================================== -->
+      <section id="view-rag" class="view-section">
+        <div class="rag-container">
+          <div class="rag-hero-box">
+            <h1 class="rag-hero-title">
+              DocuMind <span class="gradient-text">Neural Search &amp; Q&amp;A</span>
+            </h1>
+            <p class="rag-hero-sub">
+              Ask natural language questions across all processed contracts, invoices, and expense receipts. Powered by vector indexing and multi-page citation grounding.
+            </p>
+          </div>
+
+          <div class="rag-search-bar">
+            <span style="color:var(--color-lime); margin-right:8px;" data-icon="sparkles"></span>
+            <input type="text" id="rag-search-input" placeholder="e.g. What are our total cloud expenses across Q3?">
+            <button class="btn btn-lime btn-sm" id="btn-execute-rag">Ask AI</button>
+          </div>
+
+          <div class="prompt-suggestions">
+            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Recommended Queries:</span>
+            <button class="prompt-chip" data-query="What are our total cloud and infrastructure expenses across Q3?">
+              Total Cloud Expenses Q3
+            </button>
+            <button class="prompt-chip" data-query="Show all invoices with flagged bank account anomalies or rate surges">
+              Flagged Bank Account Anomalies
+            </button>
+            <button class="prompt-chip" data-query="Which contracts have auto-renewal or indemnification clauses over $100k?">
+              Auto-Renewal Contracts &gt; $100k
+            </button>
+            <button class="prompt-chip" data-query="What is the breakdown of executive travel expenses this month?">
+              Executive Travel Breakdown
+            </button>
+          </div>
+
+          <!-- Answer Card Container -->
+          <div id="rag-results-container">
+            <!-- Injected by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           VIEW 4: Approval Workflows Matrix (Kanban)
+           ===================================================================== -->
+      <section id="view-workflows" class="view-section">
+        <div style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h2 style="font-size:1.3rem; font-weight:700; color:var(--color-white);">Approval Workflow Engine</h2>
+            <p style="font-size:0.8rem; color:var(--text-secondary);">Real-time governance matrix routing documents based on delegation of authority (DOA) rules.</p>
+          </div>
+          <div class="badge badge-lime">
+            ● 5 Automation Rules Active
+          </div>
+        </div>
+
+        <div class="workflows-kanban" id="workflows-kanban-board">
+          <!-- 5 Columns injected via JS -->
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           VIEW 5: Executive ROI & Metrics (Before vs After)
+           ===================================================================== -->
+      <section id="view-metrics" class="view-section">
+        <div class="showcase-container">
+          
+          <!-- Hero Before vs After Comparison Card -->
+          <div class="comparison-hero-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+              <div>
+                <span class="badge badge-lime" style="margin-bottom:8px;">Portfolio Showcase &bull; QuolyTech</span>
+                <h1 style="font-size:1.85rem; font-weight:800; color:var(--color-white); letter-spacing:-0.02em;">
+                  Quantifiable Impact: "Saves 19.2 Hours Every Week"
+                </h1>
+                <p style="color:var(--text-secondary); font-size:0.88rem; max-width:640px; margin-top:6px;">
+                  DocuMind eliminates manual data entry, eliminates invoice chase emails, and prevents fraudulent bank details from slipping past AP clerks.
+                </p>
+              </div>
+              <div style="background:rgba(198,255,51,0.1); border:1px solid rgba(198,255,51,0.3); border-radius:var(--radius-lg); padding:16px 24px; text-align:center;">
+                <div style="font-size:0.75rem; text-transform:uppercase; color:var(--color-lime); font-weight:700;">Net Turnaround Speedup</div>
+                <div style="font-size:2.4rem; font-weight:900; color:var(--color-lime); font-family:var(--font-mono);">87% Faster</div>
+                <div style="font-size:0.72rem; color:var(--text-muted);">From 6.2 days down to 4.1 hours</div>
+              </div>
+            </div>
+
+            <!-- Comparison Columns -->
+            <div class="comparison-grid">
+              <!-- Before Column -->
+              <div class="comparison-column col-before">
+                <div class="col-heading">
+                  <span style="color:#FF4757;" data-icon="x"></span> Before DocuMind (Manual Process)
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Weekly AP Hours Spent:</span>
+                  <span class="stat-val" style="color:#FF6B81;">22.4 Hours / Week</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Human Typing Error Rate:</span>
+                  <span class="stat-val" style="color:#FF6B81;">4.8% per batch</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Invoice Approval Turnaround:</span>
+                  <span class="stat-val" style="color:#FF6B81;">6.2 Business Days</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Vendor Master Fraud Detection:</span>
+                  <span class="stat-val" style="color:#FF6B81;">Manual / Spot checks only</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Audit Trail Rigor:</span>
+                  <span class="stat-val" style="color:#FF6B81;">Scattered email threads</span>
+                </div>
+              </div>
+
+              <!-- After Column -->
+              <div class="comparison-column col-after">
+                <div class="col-heading">
+                  <span style="color:var(--color-lime);" data-icon="checkCircle"></span> After DocuMind (Autonomous AI)
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Weekly AP Hours Spent:</span>
+                  <span class="stat-val" style="color:var(--color-lime);">3.2 Hours / Week (85.7% saved)</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">AI Extraction Accuracy:</span>
+                  <span class="stat-val" style="color:var(--color-lime);">99.88% (0.12% error)</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Invoice Approval Turnaround:</span>
+                  <span class="stat-val" style="color:var(--color-lime);">4.1 Hours (Same-Day)</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Vendor Master Fraud Detection:</span>
+                  <span class="stat-val" style="color:var(--color-lime);">100% Real-time IBAN / Rate Sentinel</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Audit Trail Rigor:</span>
+                  <span class="stat-val" style="color:var(--color-lime);">Cryptographic SOC-2 Immutable Log</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive ROI Savings Calculator -->
+          <div class="roi-calculator-card">
+            <div>
+              <span class="badge badge-violet" style="margin-bottom:6px;">Interactive Client Demo Tool</span>
+              <h2 style="font-size:1.35rem; font-weight:800; color:var(--color-white);">
+                Enterprise Annual Cost Savings Calculator
+              </h2>
+              <p style="font-size:0.82rem; color:var(--text-secondary); margin-top:4px;">
+                Adjust your organization's monthly document volume and staff cost to see your estimated financial return on investment.
+              </p>
+            </div>
+
+            <div class="calculator-grid">
+              <div class="calculator-inputs">
+                <div class="slider-group">
+                  <div class="slider-label-row">
+                    <span style="color:var(--color-white);">Monthly Document Ingestion Volume:</span>
+                    <span style="color:var(--color-lime); font-family:var(--font-mono); font-weight:700;" id="calc-volume-display">1,500 docs/mo</span>
+                  </div>
+                  <input type="range" class="slider-input" id="calc-volume-slider" min="300" max="15000" step="100" value="1500">
+                  <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:var(--text-muted); margin-top:4px;">
+                    <span>300 docs</span>
+                    <span>5,000 docs</span>
+                    <span>15,000+ docs</span>
+                  </div>
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-label-row">
+                    <span style="color:var(--color-white);">Average AP Specialist Hourly Rate:</span>
+                    <span style="color:var(--text-violet); font-family:var(--font-mono); font-weight:700;" id="calc-rate-display">$42.00 / hr</span>
+                  </div>
+                  <input type="range" class="slider-input" id="calc-rate-slider" min="25" max="100" step="1" value="42">
+                  <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:var(--text-muted); margin-top:4px;">
+                    <span>$25/hr</span>
+                    <span>$50/hr</span>
+                    <span>$100/hr</span>
+                  </div>
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-label-row">
+                    <span style="color:var(--color-white);">Manual Minutes Spent per Document:</span>
+                    <span style="color:var(--text-secondary); font-family:var(--font-mono); font-weight:700;" id="calc-time-display">25 minutes</span>
+                  </div>
+                  <input type="range" class="slider-input" id="calc-time-slider" min="10" max="50" step="5" value="25">
+                  <div style="display:flex; justify-content:space-between; font-size:0.68rem; color:var(--text-muted); margin-top:4px;">
+                    <span>10 mins</span>
+                    <span>25 mins (Avg)</span>
+                    <span>50 mins</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Calculated Output Box -->
+              <div class="roi-results-box">
+                <div class="roi-big-result">
+                  <div style="font-size:0.8rem; text-transform:uppercase; color:var(--text-secondary); font-weight:700; letter-spacing:0.05em;">
+                    Projected Annual Savings
+                  </div>
+                  <div class="roi-dollar-val" id="roi-annual-dollars">$157,500</div>
+                  <div style="font-size:0.75rem; color:var(--color-lime); font-weight:600;">Net direct labor &amp; error reduction</div>
+                </div>
+
+                <div style="border-top:1px solid var(--border-subtle); padding-top:16px; display:flex; flex-direction:column; gap:8px;">
+                  <div style="display:flex; justify-content:space-between; font-size:0.82rem;">
+                    <span style="color:var(--text-secondary);">Hours Reclaimed Monthly:</span>
+                    <strong style="color:var(--color-white); font-family:var(--font-mono);" id="roi-hours-saved">312.5 hrs</strong>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; font-size:0.82rem;">
+                    <span style="color:var(--text-secondary);">Estimated Payback Period:</span>
+                    <strong style="color:var(--color-lime);" id="roi-payback">&lt; 28 Days</strong>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; font-size:0.82rem;">
+                    <span style="color:var(--text-secondary);">ERP Integration:</span>
+                    <strong style="color:var(--text-violet);">Ready (NetSuite / QBO)</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Enterprise Footer with QuolyTech Copyright -->
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand-col">
+            <div class="footer-brand">
+              <div class="brand-icon-box" style="width:34px; height:34px;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                </svg>
+              </div>
+              <div style="display:flex; flex-direction:column;">
+                <span style="font-weight:700; font-size:1.05rem; color:var(--color-white); letter-spacing:-0.01em;">DocuMind AI</span>
+                <span style="font-size:0.68rem; color:var(--text-muted);">Enterprise Document Processing</span>
+              </div>
+            </div>
+            <p class="footer-tagline">
+              Autonomous AI Document Processing &amp; Financial Operations System engineered for accounting teams, law firms, and corporate finance.
+            </p>
+            <div class="footer-compliance-badges">
+              <span class="compliance-badge"><span data-icon="shieldCheck"></span> SOC-2 Type II</span>
+              <span class="compliance-badge"><span data-icon="zap"></span> Zero Data Retention (ZDR)</span>
+              <span class="compliance-badge"><span data-icon="checkCircle"></span> 256-Bit AES</span>
+            </div>
+          </div>
+
+          <div class="footer-links-grid">
+            <div class="footer-link-group">
+              <div class="footer-link-title">Platform</div>
+              <a href="#" class="footer-link" data-footer-view="intro">Overview / Home</a>
+              <a href="#" class="footer-link" data-footer-view="queue">Live Document Queue</a>
+              <a href="#" class="footer-link" data-footer-view="studio">Document Studio (Split Review)</a>
+              <a href="#" class="footer-link" data-footer-view="rag">Neural Search &amp; Q&amp;A</a>
+              <a href="#" class="footer-link" data-footer-view="workflows">Approval Workflows</a>
+              <a href="#" class="footer-link" data-footer-view="metrics">ROI &amp; Savings Calculator</a>
+            </div>
+
+            <div class="footer-link-group">
+              <div class="footer-link-title">Integrations</div>
+              <a href="#" class="footer-link">Oracle NetSuite (REST)</a>
+              <a href="#" class="footer-link">QuickBooks Online (OAuth)</a>
+              <a href="#" class="footer-link">Xero Accounting</a>
+              <a href="#" class="footer-link">SAP Financial Services</a>
+              <a href="#" class="footer-link">Automated CSV / SFTP</a>
+            </div>
+
+            <div class="footer-link-group">
+              <div class="footer-link-title">Trust &amp; Governance</div>
+              <a href="#" class="footer-link">SOC-2 Type II Audit</a>
+              <a href="#" class="footer-link">Zero Data Retention (ZDR) SLA</a>
+              <a href="#" class="footer-link">Data Privacy &amp; GDPR</a>
+              <a href="#" class="footer-link">Immutable Audit Logging</a>
+              <a href="#" class="footer-link">Sub-processor Registry</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="copyright-notice">
+            &copy; 2026 <strong>QuolyTech</strong>. All rights reserved. DocuMind&trade; is an autonomous AI document operations system developed by QuolyTech.
+          </div>
+          <div class="footer-sub-links">
+            <span>Corporate Engineering by <strong>QuolyTech</strong></span>
+            <span>&bull;</span>
+            <span>All systems nominal</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Mobile Floating Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+      <button class="mobile-nav-item active" data-mobile-view="intro">
+        <span data-icon="sparkles"></span>
+        <span>Home</span>
+      </button>
+      <button class="mobile-nav-item" data-mobile-view="queue">
+        <span data-icon="fileText"></span>
+        <span>Queue</span>
+      </button>
+      <button class="mobile-nav-item" data-mobile-view="studio">
+        <span data-icon="maximize"></span>
+        <span>Studio</span>
+      </button>
+      <button class="mobile-nav-item" data-mobile-view="rag">
+        <span data-icon="search"></span>
+        <span>Q&amp;A</span>
+      </button>
+      <button class="mobile-nav-item" data-mobile-view="metrics">
+        <span data-icon="barChart"></span>
+        <span>ROI</span>
+      </button>
+    </nav>
+
+    <!-- =====================================================================
+         MODAL 1: Live Data Entry Modal (Zero-Data Real-Time Ingestor)
+         ===================================================================== -->
+    <div class="modal-overlay" id="live-entry-modal">
+      <div class="modal-card" style="max-width: 720px;">
+        <div class="modal-header">
+          <h3 class="modal-title">
+            <span data-icon="zap" style="color:var(--color-lime);"></span>
+            <span>Live Document Data Entry &amp; Ingestion</span>
+          </h3>
+          <button class="modal-close-btn" data-close-modal="live-entry-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:14px;">
+            Enter custom invoice or contract information below to watch the autonomous AI pipeline parse layout tokens, calculate totals, and check Sentinel fraud rules in real time.
+          </p>
+
+          <!-- 1-Click Quick Fill Presets! -->
+          <div style="margin-bottom:14px;">
+            <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; font-weight:700; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+              <span data-icon="zap" style="color:var(--color-lime);"></span>
+              <span>1-Click Quick-Fill Presets:</span>
+            </div>
+            <div class="quick-fill-group">
+              <button type="button" class="quick-fill-btn" data-fill-preset="cloud">CloudScale Infrastructure ($14.8k)</button>
+              <button type="button" class="quick-fill-btn" data-fill-preset="freight">Horizon Container Drayage ($42.3k)</button>
+              <button type="button" class="quick-fill-btn" data-fill-preset="legal">Apex Legal Advisory MSA ($120k)</button>
+              <button type="button" class="quick-fill-btn" data-fill-preset="travel">Delta Flight &amp; Hotel ($1.2k)</button>
+            </div>
+          </div>
+
+          <form id="live-entry-form">
+            <div class="extraction-field-group">
+              <div class="field-grid-2col">
+                <div class="field-card">
+                  <label class="field-label">Document Type</label>
+                  <select id="entry-doc-type" class="doc-select-dropdown" style="width:100%; margin-top:4px;">
+                    <option value="invoice">Vendor Invoice</option>
+                    <option value="contract">Legal Contract (MSA)</option>
+                    <option value="receipt">Corporate Receipt</option>
+                  </select>
+                </div>
+
+                <div class="field-card">
+                  <label class="field-label">Counterparty / Vendor Name *</label>
+                  <input type="text" id="entry-vendor-name" class="field-input-box" placeholder="e.g. Stripe Payments Inc." required value="Apex Technologies Corp">
+                </div>
+              </div>
+            </div>
+
+            <div class="extraction-field-group">
+              <div class="field-grid-2col">
+                <div class="field-card">
+                  <label class="field-label">Document / Invoice Number *</label>
+                  <input type="text" id="entry-invoice-number" class="field-input-box mono" placeholder="e.g. INV-2024-991" required value="INV-2024-LIVE01">
+                </div>
+
+                <div class="field-card">
+                  <label class="field-label">Vendor Tax ID (TIN / VAT)</label>
+                  <input type="text" id="entry-tax-id" class="field-input-box mono" placeholder="e.g. US-99120391" value="US-128938190">
+                </div>
+
+                <div class="field-card">
+                  <label class="field-label">Issue Date</label>
+                  <input type="date" id="entry-doc-date" class="field-input-box" value="2024-10-24">
+                </div>
+
+                <div class="field-card">
+                  <label class="field-label">Due Date</label>
+                  <input type="date" id="entry-due-date" class="field-input-box" value="2024-11-23">
+                </div>
+              </div>
+            </div>
+
+            <div class="extraction-field-group">
+              <div class="field-group-heading">
+                <span>Primary Line Item &amp; Financials</span>
+              </div>
+              <div class="field-grid-2col">
+                <div class="field-card">
+                  <label class="field-label">Line Item Description</label>
+                  <input type="text" id="entry-line-desc" class="field-input-box" value="Enterprise AI Software License (Annual)">
+                </div>
+
+                <div class="field-card">
+                  <label class="field-label">Amount Payable ($ USD) *</label>
+                  <input type="number" step="0.01" id="entry-total-amount" class="field-input-box mono" style="font-size:1.1rem; color:var(--color-lime);" required value="18500.00">
+                </div>
+              </div>
+            </div>
+
+            <!-- OCR Progress Bar in Live Modal -->
+            <div id="live-entry-progress" style="display:none; margin-top:16px; background:var(--bg-deep); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:16px;">
+              <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:600; margin-bottom:6px;">
+                <span id="live-step-text" style="color:var(--color-lime);">1. Ingesting &amp; Binarizing...</span>
+                <span id="live-pct-text" style="color:var(--color-white); font-family:var(--font-mono);">0%</span>
+              </div>
+              <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:var(--radius-pill); overflow:hidden;">
+                <div id="live-progress-fill" style="height:100%; width:0%; background:linear-gradient(90deg, var(--color-violet) 0%, var(--color-lime) 100%); transition:width 0.25s ease;"></div>
+              </div>
+            </div>
+
+            <div class="modal-footer" style="padding:16px 0 0; margin-top:20px;">
+              <button type="button" class="btn btn-ghost btn-sm" data-close-modal="live-entry-modal">Cancel</button>
+              <button type="submit" class="btn btn-lime btn-sm" id="btn-submit-live-entry">
+                <span data-icon="zap"></span>
+                <span>Process &amp; Ingest Live</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 2: Upload Document Modal
+         ===================================================================== -->
+    <div class="modal-overlay" id="upload-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 class="modal-title">
+            <span data-icon="uploadCloud" style="color:var(--color-lime);"></span>
+            <span>Ingest Document into AI Processing Pipeline</span>
+          </h3>
+          <button class="modal-close-btn" data-close-modal="upload-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="border: 2px dashed var(--border-violet); border-radius: var(--radius-lg); padding: 32px 20px; text-align: center; background: rgba(125,57,235,0.05); margin-bottom: 20px; cursor: pointer;" id="drag-drop-zone">
+            <div style="color:var(--color-lime); margin-bottom: 10px;" data-icon="uploadCloud"></div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: var(--color-white); margin-bottom: 4px;">
+              Drag &amp; Drop Invoices, Contracts, or Scans
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 16px;">
+              Supports PDF, PNG, JPG, TIFF up to 50MB
+            </div>
+            <input type="file" id="real-file-input" style="display: none;" accept=".pdf,.png,.jpg,.jpeg,.tiff">
+            <button class="btn btn-secondary btn-sm" onclick="document.getElementById('real-file-input').click()">
+              Browse Local Files
+            </button>
+          </div>
+
+          <div style="margin-bottom: 12px; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+            Or Load Pre-configured Enterprise Sample:
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;" id="sample-docs-quick-load">
+            <!-- Injected sample buttons -->
+          </div>
+
+          <!-- OCR Processing Progress Simulation Bar -->
+          <div id="upload-progress-container" style="display: none; margin-top: 24px; background: var(--bg-deep); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.78rem; font-weight: 600; margin-bottom: 6px;">
+              <span id="upload-status-step" style="color: var(--color-lime);">1. High-Resolution Binarization &amp; Deskewing...</span>
+              <span id="upload-percent-text" style="color: var(--color-white); font-family: var(--font-mono);">0%</span>
+            </div>
+            <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: var(--radius-pill); overflow: hidden;">
+              <div id="upload-progress-fill" style="height: 100%; width: 0%; background: linear-gradient(90deg, var(--color-violet) 0%, var(--color-lime) 100%); transition: width 0.3s ease;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost btn-sm" data-close-modal="upload-modal">Cancel</button>
+          <button class="btn btn-lime btn-sm" id="btn-start-ocr-scan">
+            Start AI Extraction Pipeline
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 3: Export Hub Modal
+         ===================================================================== -->
+    <div class="modal-overlay" id="export-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 class="modal-title">
+            <span data-icon="download" style="color:var(--color-lime);"></span>
+            <span>Export to Accounting &amp; ERP Systems</span>
+          </h3>
+          <button class="modal-close-btn" data-close-modal="export-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:18px;">
+            Seamlessly sync structured extracted line items, vendor TINs, and tax calculations to your General Ledger.
+          </p>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">
+            <div style="background:var(--bg-surface-elevated); border:1.5px solid var(--border-lime); border-radius:var(--radius-md); padding:14px; cursor:pointer;" class="export-target-card selected" data-target="csv">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <span style="font-weight:700; color:var(--color-white);">Standard CSV / Excel</span>
+                <span class="badge badge-lime">Ready</span>
+              </div>
+              <div style="font-size:0.72rem; color:var(--text-secondary);">Direct flat spreadsheet download for Quickbooks/Xero manual upload</div>
+            </div>
+
+            <div style="background:var(--bg-surface-elevated); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:14px; cursor:pointer;" class="export-target-card" data-target="json">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <span style="font-weight:700; color:var(--color-white);">REST API / JSON</span>
+                <span class="badge badge-violet">Schema v4.2</span>
+              </div>
+              <div style="font-size:0.72rem; color:var(--text-secondary);">Structured JSON payload with normalized GL codes and bounding boxes</div>
+            </div>
+
+            <div style="background:var(--bg-surface-elevated); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:14px; cursor:pointer;" class="export-target-card" data-target="netsuite">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <span style="font-weight:700; color:var(--color-white);">Oracle NetSuite</span>
+                <span class="badge badge-neutral">SuiteTalk</span>
+              </div>
+              <div style="font-size:0.72rem; color:var(--text-secondary);">Automated Bill &amp; PO match journal creation</div>
+            </div>
+
+            <div style="background:var(--bg-surface-elevated); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:14px; cursor:pointer;" class="export-target-card" data-target="quickbooks">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <span style="font-weight:700; color:var(--color-white);">QuickBooks Online</span>
+                <span class="badge badge-neutral">OAuth 2.0</span>
+              </div>
+              <div style="font-size:0.72rem; color:var(--text-secondary);">Direct expense and bill sync with PDF attachment</div>
+            </div>
+          </div>
+
+          <div style="background:var(--bg-deep); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:14px; font-family:var(--font-mono); font-size:0.72rem; color:#A6B0CF; max-height:160px; overflow-y:auto;" id="export-preview-box">
+            // Ready to export active documents...
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost btn-sm" data-close-modal="export-modal">Close</button>
+          <button class="btn btn-lime btn-sm" id="btn-trigger-download-export">
+            Download Export File
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+  </div>
+
+  <!-- Application Logic Modules -->
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
